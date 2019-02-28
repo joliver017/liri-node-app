@@ -2,8 +2,9 @@ require("dotenv").config();
 
 var keys = require("./keys.js");
 var axios = require("axios");
+var Spotify = require('node-spotify-api');
 
-// var spotify = new Spotify(keys.spotify);
+var spotify = new Spotify(keys.spotify);
 
 var args = process.argv;
 var searchArr = args.slice(3);
@@ -12,6 +13,8 @@ var search = searchArr.join(" ");
 var queryUrl_1 = "https://rest.bandsintown.com/artists/" + search + "/events?app_id=codingbootcamp"
 var queryUrl_2 = "http://www.omdbapi.com/?t=" + search + "&y=&plot=short&apikey=trilogy";
 
+
+// This is the axios request for BandsInTown
 if (process.argv[2] == "concert-this") {
         console.log(search);
         console.log("====================");
@@ -37,6 +40,8 @@ axios
     })
 };
 
+
+// This is the axios request for OMDB
 if (process.argv[2] == "movie-this") {
     console.log(search);
     console.log("====================");
@@ -59,4 +64,20 @@ axios
         console.log(error);
     }
 })
+};
+
+
+// This is the request for Spotify
+if (process.argv[2] == "spotify-this-song") {
+    console.log(search);
+    console.log("====================");
+
+    spotify
+    .search({ type: 'track', query: search, limit: 1 })
+    .then(function(response) {
+      console.log(response.tracks.items);
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
 };
