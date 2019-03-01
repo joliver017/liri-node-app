@@ -75,7 +75,7 @@ if (process.argv[2] == "spotify-this-song") {
     spotify
     .search({ type: 'track', query: search, limit: 1 })
     .then(function(response) {
-      console.log(response.tracks.items);
+      console.log("Artist's Name: " + response.tracks.items[0].album.artists[0].name);
     })
     .catch(function(err) {
       console.log(err);
