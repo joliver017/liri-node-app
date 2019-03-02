@@ -45,8 +45,10 @@ axios
 if (process.argv[2] == "movie-this") {
     console.log(search);
     console.log("====================");
+    
 
 axios
+
 .get(queryUrl_2)
 .then(function(response){
     console.log("Title: " + response.data.Title);
@@ -71,13 +73,29 @@ axios
 if (process.argv[2] == "spotify-this-song") {
     console.log(search);
     console.log("====================");
+    defaultSearch();
 
     spotify
     .search({ type: 'track', query: search, limit: 1 })
     .then(function(response) {
       console.log("Artist's Name: " + response.tracks.items[0].album.artists[0].name);
+      console.log("Song Name: " + response.tracks.items[0].name);
+      console.log("Album Name: " + response.tracks.items[0].album.name);
+      console.log("Song Link: " + response.tracks.items[0].album.artists[0].external_urls.spotify);
+    //   console.log(response.tracks.items);
     })
     .catch(function(err) {
       console.log(err);
     });
 };
+
+function defaultSearch () {
+    if (process.argv[2] == "spotify-this-song" && search == "") {
+        search = "The Sign";
+        console.log(search);
+    }
+    if (process.argv[2] == "movie-this" && search == "") {
+        search = "Mr Nobody";
+        console.log(search);
+    }
+}
