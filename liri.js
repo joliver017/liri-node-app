@@ -3,6 +3,7 @@ require("dotenv").config();
 var keys = require("./keys.js");
 var axios = require("axios");
 var Spotify = require('node-spotify-api');
+var fs = require("fs");
 
 var spotify = new Spotify(keys.spotify);
 
@@ -73,7 +74,6 @@ axios
 if (process.argv[2] == "spotify-this-song") {
     console.log(search);
     console.log("====================");
-    defaultSearch();
 
     spotify
     .search({ type: 'track', query: search, limit: 1 })
@@ -89,13 +89,26 @@ if (process.argv[2] == "spotify-this-song") {
     });
 };
 
-function defaultSearch () {
-    if (process.argv[2] == "spotify-this-song" && search == "") {
-        search = "The Sign";
-        console.log(search);
-    }
-    if (process.argv[2] == "movie-this" && search == "") {
-        search = "Mr Nobody";
-        console.log(search);
-    }
+// This is the request for executing what the txt file says
+if (process.argv[2] == "do-what-it-says") {
+    fs.readFile("random.txt", "utf8", function(err, data) {
+        if (err) {
+          return console.log(err);
+        }
+
+        data = data.split(", ");
+        console.log(data);
+
+    })
 }
+
+// function defaultSearch () {
+//     if (process.argv[2] == "spotify-this-song" && search == "") {
+//         search = "The Sign";
+//         console.log(search);
+//     }
+//     if (process.argv[2] == "movie-this" && search == "") {
+//         search = "Mr Nobody";
+//         console.log(search);
+//     }
+// }
