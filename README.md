@@ -30,6 +30,6 @@ After entering each command, follow it with whatever you want to search for. Bel
 - Axios
 - Moment
 - DotEnv
-- OMD API
+- OMDB API
 - BandsInTownAPI
 - Node Spotify API
