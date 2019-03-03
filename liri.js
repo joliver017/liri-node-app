@@ -17,28 +17,28 @@ var movies_URL = "http://www.omdbapi.com/?t=" + search + "&y=&plot=short&apikey=
 
 // This is the axios request for BandsInTown
 if (process.argv[2] == "concert-this") {
-        console.log(search);
-        console.log("====================");
+    console.log(search);
+    console.log("====================");
 
-axios
-    .get(bands_URL)
-    .then(function(response){
-        for (i=0; i<response.data.length; i++) {
-        // var momentDate = moment(response.data[i].datetime);
-        // var date = moment(momentDate).format('MMMM Do YYYY, h:mm:ss a');
-        var venue_info = response.data[i].venue.name + "\n" + response.data[i].venue.city + ", " + response.data[i].venue.region + "\n" + response.data[i].datetime;
-       
-        console.log(venue_info);
-        console.log("====================")
-        // console.log(date);
-        }
-    })
+    axios
+        .get(bands_URL)
+        .then(function(response){
+            for (i=0; i<response.data.length; i++) {
+            // var momentDate = moment(response.data[i].datetime);
+            // var date = moment(momentDate).format('MMMM Do YYYY, h:mm:ss a');
+            var venue_info = response.data[i].venue.name + "\n" + response.data[i].venue.city + ", " + response.data[i].venue.region + "\n" + response.data[i].datetime;
+        
+            console.log(venue_info);
+            console.log("====================")
+            // console.log(date);
+            }
+        })
 
-    .catch(function(error){
-        if (error.response) {
-            console.log(error);
-        }
-    })
+        .catch(function(error){
+            if (error.response) {
+                console.log(error);
+            }
+        })
 };
 
 
@@ -50,28 +50,25 @@ if (process.argv[2] == "movie-this") {
     }
     console.log(search);
     console.log("====================");
-    
-    
 
-axios
+    axios
+        .get(movies_URL)
+        .then(function(response){
+            console.log("Title: " + response.data.Title);
+            console.log("Year Released: " + response.data.Year);
+            console.log(response.data.Ratings[0].Source + ": " + response.data.Ratings[0].Value);
+            console.log(response.data.Ratings[1].Source + ": " + response.data.Ratings[1].Value);
+            console.log(response.data.Country);
+            console.log(response.data.Language);
+            console.log(response.data.Plot);
+            console.log("Actors: " + response.data.Actors);
+        })
 
-.get(movies_URL)
-.then(function(response){
-    console.log("Title: " + response.data.Title);
-    console.log("Year Released: " + response.data.Year);
-    console.log(response.data.Ratings[0].Source + ": " + response.data.Ratings[0].Value);
-    console.log(response.data.Ratings[1].Source + ": " + response.data.Ratings[1].Value);
-    console.log(response.data.Country);
-    console.log(response.data.Language);
-    console.log(response.data.Plot);
-    console.log("Actors: " + response.data.Actors);
-})
-
-.catch(function(error){
-    if (error.response) {
-        console.log(error);
-    }
-})
+        .catch(function(error){
+            if (error.response) {
+                console.log(error);
+            }
+        })
 };
 
 
@@ -110,9 +107,6 @@ if (process.argv[2] == "do-what-it-says") {
           return console.log(err);
         }
 
-        var readMe_bands_URL = "https://rest.bandsintown.com/artists/" + data[1] + "/events?app_id=codingbootcamp"
-        var readMe_movies_URL = "http://www.omdbapi.com/?t=" + data[1] + "&y=&plot=short&apikey=trilogy";
-
         data = data.split(", ");
         console.log(data);
 
@@ -135,6 +129,7 @@ if (process.argv[2] == "do-what-it-says") {
         };
 
         if (data[0] == "movie-this") {
+            var readMe_movies_URL = "http://www.omdbapi.com/?t=" + data[1] + "&y=&plot=short&apikey=trilogy";
             console.log(data[1]);
             console.log("====================");
             
@@ -160,8 +155,9 @@ if (process.argv[2] == "do-what-it-says") {
         })
         };
 
-        if (process.argv[2] == "concert-this") {
-            console.log(search);
+    if (data[0] == "concert-this") {
+            var readMe_bands_URL = "https://rest.bandsintown.com/artists/" + data[1] + "/events?app_id=codingbootcamp"
+            console.log(data[1]);
             console.log("====================");
     
     axios
