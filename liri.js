@@ -2,6 +2,7 @@ require("dotenv").config();
 
 var keys = require("./keys.js");
 var axios = require("axios");
+var moment = require("moment");
 var Spotify = require('node-spotify-api');
 var fs = require("fs");
 
@@ -23,11 +24,12 @@ if (process.argv[2] == "concert-this") {
     axios
         .get(bands_URL)
         .then(function(response){
-            // var date = response.data[i].datetime.split("T")[0];
-            // date = moment(date, "YYYY-MM-DD").format("MM/DD/YYYY");
+            
             for (i=0; i<response.data.length; i++) {
-                var venue_info = response.data[i].venue.name + "\n" + response.data[i].venue.city + ", " + response.data[i].venue.region + "\n" + response.data[i].datetime.split("T")[0];
-    
+                var date = response.data[i].datetime.split("T")[0];
+                date = moment(date, "YYYY-MM-DD").format("MM/DD/YYYY");
+                var venue_info = response.data[i].venue.name + "\n" + response.data[i].venue.city + ", " + response.data[i].venue.region + "\n" + date;
+                
                 console.log(venue_info);
                 console.log("====================")
             }
@@ -158,9 +160,9 @@ if (process.argv[2] == "do-what-it-says") {
             .get(readMe_bands_URL)
             .then(function(response){
                 for (i=0; i<response.data.length; i++) {
-                // var date = response.data[i].datetime.split("T")[0];
-                // date = moment(date, "YYYY-MM-DD").format("MM/DD/YYYY");
-                var venue_info = response.data[i].venue.name + "\n" + response.data[i].venue.city + ", " + response.data[i].venue.region + "\n" + response.data[i].datetime.split("T")[0];
+                var date = response.data[i].datetime.split("T")[0];
+                date = moment(date, "YYYY-MM-DD").format("MM/DD/YYYY");
+                var venue_info = response.data[i].venue.name + "\n" + response.data[i].venue.city + ", " + response.data[i].venue.region + "\n" + date;
             
                 console.log(venue_info);
                 console.log("====================")
