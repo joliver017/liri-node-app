@@ -26,8 +26,10 @@ if (process.argv[2] == "concert-this") {
         .then(function(response){
             
             for (i=0; i<response.data.length; i++) {
+                // The below 2 lines splits the date received from the response after T, then formats it using Moment.js
                 var date = response.data[i].datetime.split("T")[0];
                 date = moment(date, "YYYY-MM-DD").format("MM/DD/YYYY");
+
                 var venue_info = response.data[i].venue.name + "\n" + response.data[i].venue.city + ", " + response.data[i].venue.region + "\n" + date;
                 
                 console.log(venue_info);
@@ -45,6 +47,7 @@ if (process.argv[2] == "concert-this") {
 
 // This is the axios request for OMDB
 if (process.argv[2] == "movie-this") {
+    // If there is no search input by user, it defaults to Mr. Nobody
     if (!search) {
         search = "Mr Nobody";
         movies_URL = "http://www.omdbapi.com/?t=" + search + "&y=&plot=short&apikey=trilogy";
@@ -77,8 +80,9 @@ if (process.argv[2] == "movie-this") {
 if (process.argv[2] == "spotify-this-song") {
     console.log(search);
     console.log("====================");
+    // If there is no search input by user, it defaults to The Sign by The Ace of Base
     if (!search) {
-        search = "The Sign";
+        search = "The Sign The Ace";
     }
 
     spotify
@@ -105,6 +109,7 @@ if (process.argv[2] == "do-what-it-says") {
           return console.log(err);
         }
 
+        // This looks at the text in the file and splits after the comma, zero index is the command, first index is the search
         data = data.split(", ");
         console.log(data);
 
